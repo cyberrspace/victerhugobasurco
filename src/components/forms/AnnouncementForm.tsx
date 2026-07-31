@@ -35,13 +35,15 @@ export default function AnnouncementForm() {
     setState("sending");
     setMessage("");
 
-    const result = await sendTemplate(
+     const result = await sendTemplate(
       emailConfig.signupTemplateId,
       {
         from_name: name.trim(),
         reply_to: email.trim(),
         subscriber_email: email.trim(),
         list: "Announcements",
+        subject: "Announcement list signup",
+        message: `${name.trim()} asked to join the announcement list.\nEmail: ${email.trim()}`,
         submitted_at: new Date().toLocaleString(),
       },
       "vhb:signup",

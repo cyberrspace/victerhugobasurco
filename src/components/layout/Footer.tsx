@@ -97,7 +97,7 @@ export default function Footer() {
         >
           <EmberTree className="w-full max-w-[18rem] cursor-pointer sm:max-w-[26rem]" />
           <p className="mt-2 text-center font-condensed text-[0.62rem] uppercase tracking-[0.28em] text-muted/70">
-            Hover the tree
+            {/* Hover the tree */}
           </p>
         </Reveal>
       </div>

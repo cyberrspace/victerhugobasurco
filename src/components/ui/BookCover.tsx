@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useRef, useState } from 'react';
-import type { Book } from '@/data/books';
+import Image from "next/image";
+import { useRef, useState } from "react";
+import type { Book } from "@/data/books";
 
 /**
  * Covers are the loudest thing on an author site, so they get the interaction:
@@ -13,9 +13,9 @@ import type { Book } from '@/data/books';
 export default function BookCover({
   book,
   priority = false,
-  className = '',
+  className = "",
   tilt = true,
-  sizes = '(max-width: 768px) 60vw, 320px',
+  sizes = "(max-width: 768px) 60vw, 320px",
 }: {
   book: Book;
   priority?: boolean;
@@ -24,7 +24,7 @@ export default function BookCover({
   sizes?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [transform, setTransform] = useState<string>('');
+  const [transform, setTransform] = useState<string>("");
 
   const onMove = (e: React.MouseEvent) => {
     if (!tilt || !ref.current) return;
@@ -36,7 +36,7 @@ export default function BookCover({
     );
   };
 
-  const reset = () => setTransform('');
+  const reset = () => setTransform("");
 
   return (
     <div
@@ -45,9 +45,9 @@ export default function BookCover({
       onMouseLeave={reset}
       className={`group/cover relative aspect-[2/3] w-full ${className}`}
       style={{
-        transform: transform || 'perspective(1100px)',
-        transition: 'transform .7s cubic-bezier(.16,1,.3,1)',
-        transformStyle: 'preserve-3d',
+        transform: transform || "perspective(1100px)",
+        transition: "transform .7s cubic-bezier(.16,1,.3,1)",
+        transformStyle: "preserve-3d",
       }}
     >
       {/* Cast shadow on the ground behind the jacket */}
@@ -87,26 +87,21 @@ export default function BookCover({
 
 function PlaceholderJacket({ title, genre }: { title: string; genre: string }) {
   return (
-    <div className="relative flex h-full w-full flex-col justify-between overflow-hidden bg-gradient-to-b from-deep via-abyss to-night p-6">
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-30"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 30% 15%, rgba(90,169,196,.35), transparent 55%), radial-gradient(circle at 75% 80%, rgba(226,112,58,.28), transparent 60%)',
-        }}
-      />
-      <span className="relative font-condensed text-[0.6rem] uppercase tracking-[0.3em] text-bone/60">
+    <div className="relative flex h-full w-full flex-col justify-between overflow-hidden bg-gradient-to-b from-deep via-raised to-canvas p-6">
+      <div aria-hidden className="atmos-band absolute inset-0 opacity-60" />
+      <span className="relative font-condensed text-[0.6rem] uppercase tracking-[0.3em] text-primary/60">
         Victer Hugo Basurco
       </span>
       <div className="relative">
-        <h3 className="font-display text-[clamp(1.4rem,3.4vw,2rem)] leading-[1.05] text-bone">{title}</h3>
+        <h3 className="font-display text-[clamp(1.4rem,3.4vw,2rem)] leading-[1.05] text-primary">
+          {title}
+        </h3>
         <span className="mt-3 block h-px w-12 bg-ember" />
-        <span className="mt-3 block font-condensed text-[0.58rem] uppercase tracking-[0.26em] text-ash">
+        <span className="mt-3 block font-condensed text-[0.58rem] uppercase tracking-[0.26em] text-muted">
           {genre}
         </span>
       </div>
-      <span className="relative font-condensed text-[0.55rem] uppercase tracking-[0.3em] text-bone/40">
+      <span className="relative font-condensed text-[0.55rem] uppercase tracking-[0.3em] text-primary/40">
         Cover to be revealed
       </span>
     </div>

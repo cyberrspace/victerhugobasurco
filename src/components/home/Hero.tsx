@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { books, statusLabel } from '@/data/books';
-import { upcomingAppearances, formatDate } from '@/data/news';
-import BookCover from '@/components/ui/BookCover';
+import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { books, statusLabel } from "@/data/books";
+import { upcomingAppearances, formatDate } from "@/data/news";
+import BookCover from "@/components/ui/BookCover";
 
 const SLIDE_MS = 7000;
 
@@ -27,8 +27,11 @@ function buildSlides(): Slide[] {
     kicker: statusLabel[b.status],
     title: b.title,
     line: b.tagline,
-    primary: { label: b.status === 'available' ? 'Read the opening' : 'More info', href: `/works/${b.slug}` },
-    secondary: { label: 'All works', href: '/works' },
+    primary: {
+      label: b.status === "available" ? "Read the opening" : "More info",
+      href: `/works/${b.slug}`,
+    },
+    secondary: { label: "All works", href: "/works" },
     bookSlug: b.slug,
     meta: b.genre,
   }));
@@ -37,13 +40,13 @@ function buildSlides(): Slide[] {
   if (next) {
     slides.push({
       key: next.id,
-      kicker: 'Appearance',
-      title: 'Guest lecture',
-      line: `${next.venue}, ${next.city} — ${formatDate(next.date)}${next.time ? ` at ${next.time}` : ''}.`,
-      primary: { label: 'Event details', href: '/upcoming' },
-      secondary: { label: 'Invite the author', href: '/contact' },
+      kicker: "Appearance",
+      title: "Guest lecture",
+      line: `${next.venue}, ${next.city} — ${formatDate(next.date)}${next.time ? ` at ${next.time}` : ""}.`,
+      primary: { label: "Event details", href: "/upcoming" },
+      secondary: { label: "Invite the author", href: "/contact" },
       standalone: true,
-      meta: 'Free and open to readers',
+      meta: "Free and open to readers",
     });
   }
 
@@ -57,13 +60,17 @@ export default function Hero() {
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const go = useCallback(
-    (n: number) => setIndex(((n % slides.length) + slides.length) % slides.length),
+    (n: number) =>
+      setIndex(((n % slides.length) + slides.length) % slides.length),
     [slides.length],
   );
 
   useEffect(() => {
     if (paused || slides.length < 2) return;
-    timer.current = setInterval(() => setIndex((i) => (i + 1) % slides.length), SLIDE_MS);
+    timer.current = setInterval(
+      () => setIndex((i) => (i + 1) % slides.length),
+      SLIDE_MS,
+    );
     return () => {
       if (timer.current) clearInterval(timer.current);
     };
@@ -71,11 +78,11 @@ export default function Hero() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') go(index + 1);
-      if (e.key === 'ArrowLeft') go(index - 1);
+      if (e.key === "ArrowRight") go(index + 1);
+      if (e.key === "ArrowLeft") go(index - 1);
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [index, go]);
 
   return (
@@ -85,39 +92,35 @@ export default function Hero() {
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
-      className="relative flex min-h-[100svh] items-center overflow-hidden pb-24 pt-[calc(var(--nav-h)+3rem)]"
+      className="relative flex min-h-[92svh] items-center overflow-hidden pb-16 pt-[calc(var(--nav-h)+2rem)] sm:pb-20 sm:pt-[calc(var(--nav-h)+3rem)] lg:min-h-[100svh] lg:pb-24"
     >
       {/* Atmosphere: blue smoke drifting off the cover */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 animate-drift"
-        style={{
-          backgroundImage:
-            'radial-gradient(ellipse 70% 60% at 72% 38%, rgba(22,39,63,.95), transparent 68%), radial-gradient(ellipse 55% 55% at 12% 78%, rgba(10,15,23,1), transparent 70%), radial-gradient(circle at 78% 22%, rgba(90,169,196,.16), transparent 55%)',
-        }}
+        className="atmos-hero pointer-events-none absolute inset-0 animate-drift"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-night to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-56 fade-to-canvas"
       />
 
-      <div className="shell relative grid w-full items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+      <div className="shell relative grid w-full items-center gap-10 sm:gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16 xl:gap-20">
         {/* Copy */}
-        <div className="relative min-h-[22rem]">
+        <div className="order-2 min-w-0 lg:order-1">
+          <div className="grid">
           {slides.map((slide, i) => {
             const active = i === index;
             return (
               <div
                 key={slide.key}
                 aria-hidden={!active}
-                className={`${active ? '' : 'pointer-events-none'} ${
-                  i === 0 ? 'relative' : 'absolute inset-0'
-                }`}
+                className={`col-start-1 row-start-1 ${active ? "" : "pointer-events-none"}`}
                 style={{
                   opacity: active ? 1 : 0,
-                  transform: active ? 'translateY(0)' : 'translateY(18px)',
-                  filter: active ? 'blur(0)' : 'blur(6px)',
-                  transition: 'opacity .8s ease, transform .9s cubic-bezier(.16,1,.3,1), filter .8s ease',
+                  transform: active ? "translateY(0)" : "translateY(18px)",
+                  filter: active ? "blur(0)" : "blur(6px)",
+                  transition:
+                    "opacity .8s ease, transform .9s cubic-bezier(.16,1,.3,1), filter .8s ease",
                 }}
               >
                 <span className="eyebrow flex items-center gap-3">
@@ -125,12 +128,16 @@ export default function Hero() {
                   {slide.kicker}
                 </span>
 
-                <h1 className="mt-6 font-display text-display-xl text-bone text-balance">{slide.title}</h1>
+                <h1 className="mt-6 font-display text-display-xl text-primary text-balance">
+                  {slide.title}
+                </h1>
 
-                <p className="mt-6 max-w-xl text-[1.08rem] leading-relaxed text-parchment/90">{slide.line}</p>
+                <p className="mt-6 max-w-xl text-[1.08rem] leading-relaxed text-secondary/90">
+                  {slide.line}
+                </p>
 
                 {slide.meta && (
-                  <p className="mt-4 font-condensed text-[0.7rem] uppercase tracking-[0.26em] text-ash">
+                  <p className="mt-4 font-condensed text-[0.7rem] uppercase tracking-[0.26em] text-muted">
                     {slide.meta}
                   </p>
                 )}
@@ -149,9 +156,15 @@ export default function Hero() {
             );
           })}
 
+          </div>
+
           {/* Controls */}
           <div className="mt-12 flex items-center gap-5">
-            <div className="flex items-center gap-2.5" role="tablist" aria-label="Featured slides">
+            <div
+              className="flex items-center gap-2.5"
+              role="tablist"
+              aria-label="Featured slides"
+            >
               {slides.map((s, i) => (
                 <button
                   key={s.key}
@@ -164,21 +177,26 @@ export default function Hero() {
                 >
                   <span
                     className={`absolute left-0 top-1/2 h-[3px] -translate-y-1/2 transition-all duration-500 ${
-                      i === index ? 'w-8 bg-ember' : 'w-4 bg-bone/25 group-hover:w-6 group-hover:bg-bone/50'
+                      i === index
+                        ? "w-8 bg-ember"
+                        : "w-4 bg-primary/25 group-hover:w-6 group-hover:bg-primary/50"
                     }`}
-                    style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }}
+                    style={{
+                      transitionTimingFunction: "cubic-bezier(.16,1,.3,1)",
+                    }}
                   />
                 </button>
               ))}
             </div>
-            <span className="font-condensed text-[0.68rem] uppercase tracking-[0.28em] text-ash">
-              {String(index + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+            <span className="font-condensed text-[0.68rem] uppercase tracking-[0.28em] text-muted">
+              {String(index + 1).padStart(2, "0")} /{" "}
+              {String(slides.length).padStart(2, "0")}
             </span>
           </div>
         </div>
 
         {/* Jacket */}
-        <div className="relative mx-auto w-[min(340px,72vw)] lg:w-full lg:max-w-[360px]">
+        <div className="order-1 mx-auto grid w-[clamp(11rem,50vw,20rem)] lg:order-2 lg:w-full lg:max-w-[22rem]">
           {slides.map((slide, i) => {
             const active = i === index;
             const book = books.find((b) => b.slug === slide.bookSlug);
@@ -186,17 +204,24 @@ export default function Hero() {
               <div
                 key={`art-${slide.key}`}
                 aria-hidden={!active}
-                className={i === 0 ? 'relative' : 'absolute inset-0'}
+                className="col-start-1 row-start-1"
                 style={{
                   opacity: active ? 1 : 0,
-                  transform: active ? 'translateY(0) scale(1)' : 'translateY(26px) scale(.95)',
-                  transition: 'opacity .9s ease, transform 1.1s cubic-bezier(.16,1,.3,1)',
-                  pointerEvents: active ? 'auto' : 'none',
+                  transform: active
+                    ? "translateY(0) scale(1)"
+                    : "translateY(26px) scale(.95)",
+                  transition:
+                    "opacity .9s ease, transform 1.1s cubic-bezier(.16,1,.3,1)",
+                  pointerEvents: active ? "auto" : "none",
                 }}
               >
                 {book ? (
                   <div className="animate-float">
-                    <BookCover book={book} priority={i === 0} sizes="(max-width: 1024px) 70vw, 360px" />
+                    <BookCover
+                      book={book}
+                      priority={i === 0}
+                      sizes="(max-width: 1024px) 70vw, 360px"
+                    />
                   </div>
                 ) : (
                   <EventPlate />
@@ -216,27 +241,27 @@ function EventPlate() {
   const d = new Date(next.date);
 
   return (
-    <div className="relative aspect-[2/3] w-full border border-bone/15 bg-gradient-to-b from-abyss to-night p-8">
+    <div className="relative aspect-[2/3] w-full border border-hairline bg-gradient-to-b from-raised to-canvas p-8">
       <div className="flex h-full flex-col justify-between">
         <span className="font-condensed text-[0.62rem] uppercase tracking-[0.3em] text-ember">
           Save the date
         </span>
         <div>
-          <span className="block font-display text-[5.5rem] leading-none text-bone">
+          <span className="block font-display text-[5.5rem] leading-none text-primary">
             {d.getDate()}
           </span>
           <span className="mt-1 block font-condensed text-[1.1rem] uppercase tracking-[0.3em] text-helix">
-            {d.toLocaleDateString('en-US', { month: 'long' })} {d.getFullYear()}
+            {d.toLocaleDateString("en-US", { month: "long" })} {d.getFullYear()}
           </span>
           <span className="mt-5 block h-px w-16 bg-ember" />
-          <p className="mt-5 text-[0.95rem] leading-relaxed text-ash">
+          <p className="mt-5 text-[0.95rem] leading-relaxed text-muted">
             {next.venue}
             <br />
             {next.city}
-            {next.time ? ` · ${next.time}` : ''}
+            {next.time ? ` · ${next.time}` : ""}
           </p>
         </div>
-        <span className="font-condensed text-[0.6rem] uppercase tracking-[0.28em] text-ash/70">
+        <span className="font-condensed text-[0.6rem] uppercase tracking-[0.28em] text-muted/70">
           An evening with the author
         </span>
       </div>

@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import Reveal from './Reveal';
+import type { ReactNode } from "react";
+import Reveal from "./Reveal";
 
 /**
  * Section headings carry a specimen-style label instead of a decorative number.
@@ -11,23 +11,25 @@ export default function SectionHeading({
   title,
   intro,
   action,
-  align = 'left',
+  align = "left",
 }: {
   label: string;
   title: string;
   intro?: string;
   action?: ReactNode;
-  align?: 'left' | 'center';
+  align?: "left" | "center";
 }) {
-  const centered = align === 'center';
+  const centered = align === "center";
 
   return (
     <div
       className={`mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end ${
-        centered ? 'items-center text-center md:flex-col md:items-center' : 'md:justify-between'
+        centered
+          ? "items-center text-center md:flex-col md:items-center"
+          : "md:justify-between"
       }`}
     >
-      <div className={centered ? 'max-w-2xl' : 'max-w-2xl'}>
+      <div className={centered ? "max-w-2xl" : "max-w-2xl"}>
         <Reveal variant="fade">
           <span className="eyebrow flex items-center gap-3">
             <span className="h-px w-8 bg-ember/70" aria-hidden />
@@ -39,7 +41,9 @@ export default function SectionHeading({
         </Reveal>
         {intro && (
           <Reveal variant="up" delay={170}>
-            <p className="mt-4 max-w-prose text-[1.02rem] leading-relaxed text-ash">{intro}</p>
+            <p className="mt-4 max-w-prose text-[1.02rem] leading-relaxed text-muted">
+              {intro}
+            </p>
           </Reveal>
         )}
       </div>

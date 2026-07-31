@@ -1,13 +1,14 @@
-import type { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
-import { author } from '@/data/author';
-import PageHeader from '@/components/ui/PageHeader';
-import Reveal from '@/components/ui/Reveal';
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { author } from "@/data/author";
+import PageHeader from "@/components/ui/PageHeader";
+import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
-  title: 'The Author',
-  description: 'Biography of Victer Hugo Basurco — process engineer turned novelist.',
+  title: "The Author",
+  description:
+    "Biography of Victer Hugo Basurco — process engineer turned novelist.",
 };
 
 export default function AuthorPage() {
@@ -24,7 +25,9 @@ export default function AuthorPage() {
           <div className="space-y-6">
             {author.bio.map((p, i) => (
               <Reveal key={i} variant="up" delay={i * 90}>
-                <p className="max-w-prose text-[1.06rem] leading-[1.85] text-parchment/90">{p}</p>
+                <p className="max-w-prose text-[1.06rem] leading-[1.85] text-secondary/90">
+                  {p}
+                </p>
               </Reveal>
             ))}
             <Reveal variant="up" delay={400}>
@@ -57,11 +60,13 @@ export default function AuthorPage() {
             <Reveal variant="up" delay={140}>
               <dl className="grid gap-5">
                 {author.facts.map((f) => (
-                  <div key={f.label} className="border-t border-bone/10 pt-3">
+                  <div key={f.label} className="border-t border-hairline pt-3">
                     <dt className="font-condensed text-[0.6rem] uppercase tracking-[0.26em] text-ember">
                       {f.label}
                     </dt>
-                    <dd className="mt-1.5 text-[0.95rem] text-parchment">{f.value}</dd>
+                    <dd className="mt-1.5 text-[0.95rem] text-secondary">
+                      {f.value}
+                    </dd>
                   </div>
                 ))}
               </dl>

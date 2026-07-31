@@ -1,12 +1,13 @@
-import type { Metadata } from 'next';
-import { books } from '@/data/books';
-import BookCard from '@/components/ui/BookCard';
-import PageHeader from '@/components/ui/PageHeader';
-import Reveal from '@/components/ui/Reveal';
+import type { Metadata } from "next";
+import { books } from "@/data/books";
+import BookCard from "@/components/ui/BookCard";
+import PageHeader from "@/components/ui/PageHeader";
+import Reveal from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
-  title: 'Works',
-  description: 'Every novel by Victer Hugo Basurco — published, finished and in progress.',
+  title: "Works",
+  description:
+    "Every novel by Victer Hugo Basurco — published, finished and in progress.",
 };
 
 export default function WorksPage() {

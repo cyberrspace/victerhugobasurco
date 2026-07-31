@@ -1,8 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState, type ElementType, type ReactNode } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ElementType,
+  type ReactNode,
+} from "react";
 
-export type RevealVariant = 'up' | 'left' | 'right' | 'scale' | 'fade' | 'wipe' | 'cover';
+export type RevealVariant =
+  "up" | "left" | "right" | "scale" | "fade" | "wipe" | "cover";
 
 interface RevealProps {
   children: ReactNode;
@@ -19,10 +26,10 @@ interface RevealProps {
 
 export default function Reveal({
   children,
-  variant = 'up',
+  variant = "up",
   delay = 0,
-  className = '',
-  as: Tag = 'div',
+  className = "",
+  as: Tag = "div",
   repeat = false,
   threshold = 0.18,
 }: RevealProps) {
@@ -33,7 +40,7 @@ export default function Reveal({
     const node = ref.current;
     if (!node) return;
 
-    if (typeof IntersectionObserver === 'undefined') {
+    if (typeof IntersectionObserver === "undefined") {
       setVisible(true);
       return;
     }
@@ -47,7 +54,7 @@ export default function Reveal({
           setVisible(false);
         }
       },
-      { threshold, rootMargin: '0px 0px -8% 0px' },
+      { threshold, rootMargin: "0px 0px -8% 0px" },
     );
 
     observer.observe(node);
@@ -58,7 +65,7 @@ export default function Reveal({
     <Tag
       ref={ref as never}
       data-reveal={variant}
-      className={`${visible ? 'is-visible' : ''} ${className}`}
+      className={`${visible ? "is-visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
@@ -72,8 +79,8 @@ export default function Reveal({
  */
 export function StaggerText({
   text,
-  className = '',
-  as: Tag = 'span',
+  className = "",
+  as: Tag = "span",
   delay = 0,
   step = 70,
 }: {
@@ -102,16 +109,19 @@ export function StaggerText({
     return () => observer.disconnect();
   }, []);
 
-  const words = text.split(' ');
+  const words = text.split(" ");
 
   return (
     <Tag ref={ref as never} className={className}>
       {words.map((word, i) => (
-        <span key={`${word}-${i}`} className="inline-block overflow-hidden align-bottom">
+        <span
+          key={`${word}-${i}`}
+          className="stagger-word"
+        >
           <span
             className="inline-block will-change-transform"
             style={{
-              transform: visible ? 'translateY(0)' : 'translateY(105%)',
+              transform: visible ? "translateY(0)" : "translateY(105%)",
               opacity: visible ? 1 : 0,
               transition: `transform .9s cubic-bezier(.16,1,.3,1) ${delay + i * step}ms, opacity .7s ease ${
                 delay + i * step
@@ -119,7 +129,7 @@ export function StaggerText({
             }}
           >
             {word}
-            {i < words.length - 1 ? '\u00A0' : ''}
+            {i < words.length - 1 ? "\u00A0" : ""}
           </span>
         </span>
       ))}

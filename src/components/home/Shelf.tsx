@@ -1,12 +1,12 @@
-import Link from 'next/link';
-import { books } from '@/data/books';
-import BookCard from '@/components/ui/BookCard';
-import SectionHeading from '@/components/ui/SectionHeading';
-import Reveal from '@/components/ui/Reveal';
+import Link from "next/link";
+import { books } from "@/data/books";
+import BookCard from "@/components/ui/BookCard";
+import SectionHeading from "@/components/ui/SectionHeading";
+import Reveal from "@/components/ui/Reveal";
 
 export default function Shelf() {
   return (
-    <section id="works" className="relative py-24 md:py-32">
+    <section id="works" className="relative py-16 sm:py-20 md:py-28 lg:py-32">
       <div className="shell">
         <SectionHeading
           label="The shelf"
@@ -15,7 +15,9 @@ export default function Shelf() {
           action={
             <Link href="/works" className="link-more">
               <span>All works</span>
-              <span className="arrow" aria-hidden>&rarr;</span>
+              <span className="arrow" aria-hidden>
+                &rarr;
+              </span>
             </Link>
           }
         />

@@ -1,12 +1,13 @@
-import type { Metadata } from 'next';
-import ContactForm from '@/components/forms/ContactForm';
-import PageHeader from '@/components/ui/PageHeader';
-import Reveal from '@/components/ui/Reveal';
-import { socials, site } from '@/data/site';
+import type { Metadata } from "next";
+import ContactForm from "@/components/forms/ContactForm";
+import PageHeader from "@/components/ui/PageHeader";
+import Reveal from "@/components/ui/Reveal";
+import { socials, site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Write to Victer Hugo Basurco — reader mail, event invitations and press.',
+  title: "Contact",
+  description:
+    "Write to Victer Hugo Basurco — reader mail, event invitations and press.",
 };
 
 export default function ContactPage() {
@@ -30,9 +31,12 @@ export default function ContactPage() {
             <Reveal variant="right" delay={120}>
               <div className="border-l-2 border-ember pl-6">
                 <h2 className="eyebrow-muted">Before you write</h2>
-                <p className="mt-3 text-[0.95rem] leading-relaxed text-ash">{site.contactNote}</p>
-                <p className="mt-3 text-[0.95rem] leading-relaxed text-ash">
-                  Replies are not instant — he answers in batches, between drafts.
+                <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">
+                  {site.contactNote}
+                </p>
+                <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">
+                  Replies are not instant — he answers in batches, between
+                  drafts.
                 </p>
               </div>
             </Reveal>
@@ -44,9 +48,18 @@ export default function ContactPage() {
                   <ul className="mt-4 space-y-3">
                     {live.map((s) => (
                       <li key={s.label}>
-                        <a href={s.href} target="_blank" rel="noreferrer" className="link-more !text-parchment">
-                          <span>{s.label} — {s.handle}</span>
-                          <span className="arrow" aria-hidden>&nearr;</span>
+                        <a
+                          href={s.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="link-more !text-secondary"
+                        >
+                          <span>
+                            {s.label} — {s.handle}
+                          </span>
+                          <span className="arrow" aria-hidden>
+                            &nearr;
+                          </span>
                         </a>
                       </li>
                     ))}

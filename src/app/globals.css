@@ -2,77 +2,153 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---------------------------------------------------------------------------
-   TOKENS
---------------------------------------------------------------------------- */
+/* ===========================================================================
+   THEME TOKENS
+   :root holds the LIGHT values; .dark overrides with the night palette.
+   <html> is server-rendered with class="dark" (the brand default) and the
+   inline script in layout.tsx swaps it before first paint if the visitor
+   prefers, or has previously chosen, light. No flash either way.
+   Values are "R G B" triplets so Tailwind's /opacity modifiers keep working.
+   =========================================================================== */
 :root {
+  /* --- LIGHT: bone paper under cold light --------------------------------- */
+  --canvas: 244 243 239;
+  --surface: 251 250 247;
+  --raised: 235 232 225;
+  --edge: 16 26 42;
+  --edge-a: 0.14;
+  --primary: 12 20 33;
+  --secondary: 38 50 66;
+  --muted: 82 94 110;
+  --deep: 214 220 226;
+  --blood: 126 20 22;
+  --accent: 168 72 26;
+  --accent-hi: 196 85 31;
+  --accent-lo: 122 50 16;
+  --on-accent: 250 248 244;
+  --cool: 38 105 128;
+  --cool-hi: 58 127 152;
+  --cool-lo: 26 78 96;
+
+  --shadow-cover: 0 26px 60px -24px rgba(12, 20, 33, 0.45), 0 0 0 1px rgba(12, 20, 33, 0.09);
+  --shadow-lift: 0 22px 50px -26px rgba(12, 20, 33, 0.4);
+  --shadow-ember: 0 0 0 1px rgba(168, 72, 26, 0.32), 0 16px 40px -22px rgba(168, 72, 26, 0.45);
+
+  --grain-opacity: 0.035;
+  --grain-blend: multiply;
+
   --nav-h: 78px;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  /* Fine film grain, generated in-browser so it costs no request. */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
 }
 
-@media (max-width: 768px) {
+.dark {
+  /* --- DARK: charred soil, blue smoke, bone -------------------------------- */
+  --canvas: 5 7 12;
+  --surface: 10 15 23;
+  --raised: 16 26 42;
+  --edge: 243 237 225;
+  --edge-a: 0.12;
+  --primary: 243 237 225;
+  --secondary: 227 217 198;
+  --muted: 147 160 178;
+  --deep: 22 39 63;
+  --blood: 126 20 22;
+  --accent: 226 112 58;
+  --accent-hi: 240 138 75;
+  --accent-lo: 154 63 20;
+  --on-accent: 5 7 12;
+  --cool: 90 169 196;
+  --cool-hi: 123 195 218;
+  --cool-lo: 58 127 152;
+
+  --shadow-cover: 0 30px 70px -20px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(243, 237, 225, 0.06);
+  --shadow-lift: 0 24px 60px -28px rgba(0, 0, 0, 0.9);
+  --shadow-ember: 0 0 0 1px rgba(226, 112, 58, 0.35), 0 18px 45px -22px rgba(226, 112, 58, 0.55);
+
+  --grain-opacity: 0.05;
+  --grain-blend: overlay;
+}
+
+@media (max-width: 1023px) {
   :root {
-    --nav-h: 66px;
+    --nav-h: 70px;
+  }
+}
+@media (max-width: 639px) {
+  :root {
+    --nav-h: 62px;
   }
 }
 
-/* ---------------------------------------------------------------------------
+/* ===========================================================================
    BASE
---------------------------------------------------------------------------- */
+   =========================================================================== */
 @layer base {
   * {
     -webkit-tap-highlight-color: transparent;
+    min-width: 0; /* stops flex/grid children forcing horizontal scroll */
   }
 
   html {
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--nav-h) + 24px);
+    /* Offset animations and frames must never create a sideways scrollbar. */
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    @apply bg-night text-parchment font-sans antialiased;
-    text-rendering: optimizeLegibility;
+    @apply bg-canvas font-sans text-secondary antialiased;
+    overflow-x: clip;
+    transition:
+      background-color 0.5s ease,
+      color 0.5s ease;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    @apply font-display text-bone;
+    @apply font-display text-primary;
+    /* Long single words (URLs, "Mindburst") never punch out of a narrow phone. */
+    overflow-wrap: break-word;
+  }
+
+  img,
+  svg,
+  video {
+    max-width: 100%;
   }
 
   ::selection {
-    @apply bg-ember text-night;
+    @apply bg-ember text-onAccent;
   }
 
-  /* Keyboard focus stays visible everywhere. */
   :focus-visible {
-    outline: 2px solid theme('colors.ember.DEFAULT');
+    outline: 2px solid rgb(var(--accent));
     outline-offset: 3px;
     border-radius: 2px;
   }
 
-  /* Scrollbar tuned to the palette */
   ::-webkit-scrollbar {
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: theme('colors.night');
+    background: rgb(var(--canvas));
   }
   ::-webkit-scrollbar-thumb {
-    background: theme('colors.deep');
+    background: rgb(var(--muted) / 0.45);
     border-radius: 99px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: theme('colors.ember.700');
+    background: rgb(var(--accent));
   }
 }
 
-/* ---------------------------------------------------------------------------
+/* ===========================================================================
    COMPONENTS
---------------------------------------------------------------------------- */
+   =========================================================================== */
 @layer components {
   .shell {
     @apply mx-auto w-full max-w-shell px-5 sm:px-8 lg:px-12;
@@ -83,15 +159,12 @@
   }
 
   .eyebrow-muted {
-    @apply font-condensed text-eyebrow uppercase text-ash;
+    @apply font-condensed text-eyebrow uppercase text-muted;
   }
 
-  /* -- NAV LINK ------------------------------------------------------------
-     Reference site strikes each nav item with a hand-drawn marker on hover.
-     Ours is an ember brush that wipes in from the left with a rough,
-     uneven edge (clip-path) and a slight rotation so it never reads digital. */
+  /* -- NAV LINK: ember brush strike ---------------------------------------- */
   .nav-link {
-    @apply relative inline-block font-condensed uppercase tracking-[0.16em] text-[0.8125rem] text-parchment transition-colors duration-300;
+    @apply relative inline-block font-condensed text-[0.8125rem] uppercase tracking-[0.16em] text-secondary transition-colors duration-300;
   }
 
   .nav-link::before {
@@ -105,30 +178,14 @@
     transform-origin: left center;
     background: linear-gradient(
       92deg,
-      theme('colors.ember.700') 0%,
-      theme('colors.ember.500') 38%,
-      theme('colors.ember.400') 72%,
-      theme('colors.ember.600') 100%
+      rgb(var(--accent-lo)) 0%,
+      rgb(var(--accent)) 38%,
+      rgb(var(--accent-hi)) 72%,
+      rgb(var(--accent-lo)) 100%
     );
     clip-path: polygon(
-      0% 32%,
-      3% 8%,
-      12% 22%,
-      26% 4%,
-      41% 20%,
-      58% 6%,
-      74% 24%,
-      88% 8%,
-      97% 26%,
-      100% 62%,
-      94% 92%,
-      80% 74%,
-      63% 96%,
-      47% 76%,
-      31% 98%,
-      17% 78%,
-      6% 96%,
-      0% 70%
+      0% 32%, 3% 8%, 12% 22%, 26% 4%, 41% 20%, 58% 6%, 74% 24%, 88% 8%, 97% 26%,
+      100% 62%, 94% 92%, 80% 74%, 63% 96%, 47% 76%, 31% 98%, 17% 78%, 6% 96%, 0% 70%
     );
     opacity: 0.92;
     transition: transform 0.42s var(--ease-out-expo);
@@ -140,14 +197,18 @@
     transform: translateY(-50%) scaleX(1) rotate(-1.4deg);
   }
 
+  /* On the light theme the strike is solid, so the label flips to bone. */
   .nav-link:hover,
   .nav-link:focus-visible {
-    @apply text-bone;
+    @apply text-primary;
+  }
+  :root:not(.dark) .nav-link:hover,
+  :root:not(.dark) .nav-link:focus-visible {
+    color: rgb(var(--on-accent));
   }
 
-  /* Current page keeps a permanent, quieter mark. */
   .nav-link[data-active='true'] {
-    @apply text-bone;
+    @apply text-primary;
   }
   .nav-link[data-active='true']::after {
     content: '';
@@ -156,14 +217,10 @@
     right: 0;
     bottom: -8px;
     height: 2px;
-    background: theme('colors.ember.DEFAULT');
-    transform-origin: left;
+    background: rgb(var(--accent));
   }
 
-  /* -- LOGO ----------------------------------------------------------------
-     Two stacked wordmarks. Bone on rest, ember cross-fades up on hover —
-     the same "sprite swap" idea as the reference, done in type so it stays
-     crisp at any size. */
+  /* -- LOGO ---------------------------------------------------------------- */
   .logo-stack {
     @apply relative inline-flex flex-col leading-none;
   }
@@ -191,15 +248,16 @@
 
   /* -- BUTTONS ------------------------------------------------------------- */
   .btn {
-    @apply relative inline-flex items-center justify-center gap-2.5 overflow-hidden font-condensed text-[0.78rem] uppercase tracking-[0.22em] transition-all duration-300;
+    @apply relative inline-flex items-center justify-center gap-2.5 overflow-hidden text-center font-condensed text-[0.74rem] uppercase tracking-[0.2em] transition-all duration-300 sm:text-[0.78rem] sm:tracking-[0.22em];
   }
 
   .btn-ember {
-    @apply btn bg-ember px-7 py-3.5 text-night;
+    @apply btn bg-ember px-6 py-3.5 text-onAccent sm:px-7;
   }
   .btn-ember::after {
     content: '';
-    @apply absolute inset-0 -translate-x-full bg-bone transition-transform duration-500;
+    @apply absolute inset-0 -translate-x-full transition-transform duration-500;
+    background: rgb(var(--primary));
     transition-timing-function: var(--ease-out-expo);
   }
   .btn-ember > * {
@@ -209,15 +267,19 @@
     @apply translate-x-0;
   }
   .btn-ember:hover {
-    @apply text-night;
+    color: rgb(var(--canvas));
+  }
+  .btn-ember:disabled {
+    @apply cursor-not-allowed opacity-60;
   }
 
   .btn-outline {
-    @apply btn border border-bone/25 px-7 py-3.5 text-bone;
+    @apply btn border border-edge/25 px-6 py-3.5 text-primary sm:px-7;
   }
   .btn-outline::after {
     content: '';
-    @apply absolute inset-0 origin-bottom scale-y-0 bg-bone/10 transition-transform duration-500;
+    @apply absolute inset-0 origin-bottom scale-y-0 transition-transform duration-500;
+    background: rgb(var(--edge) / 0.08);
     transition-timing-function: var(--ease-out-expo);
   }
   .btn-outline:hover {
@@ -229,7 +291,7 @@
 
   /* -- TEXT LINK ----------------------------------------------------------- */
   .link-more {
-    @apply relative inline-flex items-center gap-2 font-condensed text-[0.75rem] uppercase tracking-[0.24em] text-bone transition-colors duration-300;
+    @apply relative inline-flex items-center gap-2 font-condensed text-[0.72rem] uppercase tracking-[0.22em] text-primary transition-colors duration-300 sm:text-[0.75rem] sm:tracking-[0.24em];
   }
   .link-more::after {
     content: '';
@@ -251,40 +313,45 @@
 
   /* -- SURFACES ------------------------------------------------------------ */
   .card {
-    @apply relative border border-bone/10 bg-ink/70 backdrop-blur-sm transition-all duration-500;
+    @apply relative border-hairline border bg-surface/70 backdrop-blur-sm transition-all duration-500;
     transition-timing-function: var(--ease-out-expo);
   }
   .card:hover {
-    @apply -translate-y-1.5 border-ember/35 bg-abyss/80 shadow-lift;
+    @apply -translate-y-1.5 border-ember/35 bg-raised/80 shadow-lift;
   }
 
   .field {
-    @apply w-full border border-bone/15 bg-night/60 px-4 py-3.5 text-[0.95rem] text-bone placeholder:text-ash/60 transition-all duration-300;
+    @apply w-full border border-edge/20 bg-canvas/60 px-4 py-3.5 text-[16px] text-primary transition-all duration-300 placeholder:text-muted/60 sm:text-[0.95rem];
+    /* 16px on mobile stops iOS Safari zooming the page on focus. */
   }
   .field:hover {
-    @apply border-bone/30;
+    @apply border-edge/35;
   }
   .field:focus {
-    @apply border-ember bg-night outline-none;
-    box-shadow: 0 0 0 3px rgba(226, 112, 58, 0.14);
+    @apply border-ember bg-canvas outline-none;
+    box-shadow: 0 0 0 3px rgb(var(--accent) / 0.16);
   }
   .field-label {
-    @apply mb-2 block font-condensed text-[0.7rem] uppercase tracking-[0.22em] text-ash;
+    @apply mb-2 block font-condensed text-[0.7rem] uppercase tracking-[0.22em] text-muted;
   }
 }
 
-/* ---------------------------------------------------------------------------
+/* ===========================================================================
    UTILITIES
---------------------------------------------------------------------------- */
+   =========================================================================== */
 @layer utilities {
+  .border-hairline {
+    border-color: rgb(var(--edge) / var(--edge-a));
+  }
+
   .grain::after {
     content: '';
     position: fixed;
     inset: 0;
     background-image: var(--grain);
-    opacity: 0.05;
+    opacity: var(--grain-opacity);
     pointer-events: none;
-    mix-blend-mode: overlay;
+    mix-blend-mode: var(--grain-blend);
     z-index: 60;
   }
 
@@ -297,20 +364,74 @@
     background-image: linear-gradient(
       90deg,
       transparent 0%,
-      theme('colors.helix.600') 18%,
-      theme('colors.ember.600') 50%,
-      theme('colors.helix.600') 82%,
+      rgb(var(--cool-lo)) 18%,
+      rgb(var(--accent-lo)) 50%,
+      rgb(var(--cool-lo)) 82%,
       transparent 100%
     );
     opacity: 0.55;
   }
+
+  /* Atmosphere washes. Defined here rather than inline so each theme gets its
+     own strength — the dark smoke would look like dirt on a light page. */
+  .atmos-hero {
+    background-image:
+      radial-gradient(ellipse 70% 60% at 72% 38%, rgb(var(--deep) / 0.55), transparent 68%),
+      radial-gradient(circle at 78% 22%, rgb(var(--cool) / 0.1), transparent 55%);
+  }
+  .dark .atmos-hero {
+    background-image:
+      radial-gradient(ellipse 70% 60% at 72% 38%, rgb(var(--deep) / 0.95), transparent 68%),
+      radial-gradient(ellipse 55% 55% at 12% 78%, rgb(var(--surface)), transparent 70%),
+      radial-gradient(circle at 78% 22%, rgb(var(--cool) / 0.16), transparent 55%);
+  }
+
+  .atmos-page {
+    background-image:
+      radial-gradient(ellipse 60% 70% at 20% 0%, rgb(var(--deep) / 0.5), transparent 70%),
+      radial-gradient(ellipse 50% 60% at 85% 20%, rgb(var(--accent) / 0.07), transparent 70%);
+  }
+  .dark .atmos-page {
+    background-image:
+      radial-gradient(ellipse 60% 70% at 20% 0%, rgb(var(--deep) / 0.9), transparent 70%),
+      radial-gradient(ellipse 50% 60% at 85% 20%, rgb(var(--accent) / 0.14), transparent 70%);
+  }
+
+  .atmos-band {
+    background-image:
+      radial-gradient(ellipse 55% 60% at 85% 30%, rgb(var(--accent) / 0.07), transparent 65%),
+      radial-gradient(ellipse 50% 50% at 10% 80%, rgb(var(--deep) / 0.5), transparent 70%);
+  }
+  .dark .atmos-band {
+    background-image:
+      radial-gradient(ellipse 55% 60% at 85% 30%, rgb(var(--accent) / 0.14), transparent 65%),
+      radial-gradient(ellipse 50% 50% at 10% 80%, rgb(var(--deep) / 0.8), transparent 70%);
+  }
+
+  .atmos-soft {
+    background-image: radial-gradient(ellipse 45% 55% at 18% 45%, rgb(var(--deep) / 0.45), transparent 70%);
+  }
+  .dark .atmos-soft {
+    background-image: radial-gradient(ellipse 45% 55% at 18% 45%, rgb(var(--deep) / 0.7), transparent 70%);
+  }
+
+  .fade-to-canvas {
+    background-image: linear-gradient(to top, rgb(var(--canvas)), transparent);
+  }
+
+  /* Descenders in a word-stagger heading must not be clipped by overflow. */
+  .stagger-word {
+    display: inline-block;
+    overflow: hidden;
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+    vertical-align: bottom;
+  }
 }
 
-/* ---------------------------------------------------------------------------
+/* ===========================================================================
    SCROLL REVEAL
-   One system, four flavours. Elements start hidden and are released by the
-   IntersectionObserver in <Reveal />.
---------------------------------------------------------------------------- */
+   =========================================================================== */
 [data-reveal] {
   opacity: 0;
   will-change: opacity, transform, filter;
@@ -340,10 +461,17 @@
 [data-reveal='fade'] {
   filter: blur(4px);
 }
-/* Headline wipe — the line uncovers itself left to right. */
 [data-reveal='wipe'] {
   clip-path: inset(0 100% 0 0);
   transform: translate3d(0, 12px, 0);
+}
+[data-reveal='cover'] {
+  transform: translate3d(0, 60px, 0) scale(0.94) rotate(-3deg);
+  filter: blur(12px);
+  transition:
+    opacity 1.25s var(--ease-out-expo),
+    transform 1.25s var(--ease-out-expo),
+    filter 1.25s var(--ease-out-expo);
 }
 
 [data-reveal].is-visible {
@@ -353,27 +481,62 @@
   clip-path: inset(0 0 0 0);
 }
 
-/* Cover artwork gets a longer, heavier entrance. */
-[data-reveal='cover'] {
-  opacity: 0;
-  transform: translate3d(0, 60px, 0) scale(0.94) rotate(-3deg);
-  filter: blur(12px);
-  transition:
-    opacity 1.25s var(--ease-out-expo),
-    transform 1.25s var(--ease-out-expo),
-    filter 1.25s var(--ease-out-expo);
-}
-[data-reveal='cover'].is-visible {
-  opacity: 1;
-  transform: none;
-  filter: none;
+/* Sideways entrances are muted on phones — a 42px shift on a 375px screen
+   reads as a jolt, and can briefly widen the page. */
+@media (max-width: 639px) {
+  [data-reveal='left'],
+  [data-reveal='right'] {
+    transform: translate3d(0, 24px, 0);
+  }
+  [data-reveal='cover'] {
+    transform: translate3d(0, 36px, 0) scale(0.96);
+  }
 }
 
-/* ---------------------------------------------------------------------------
+/* ===========================================================================
    FOOTER EMBER TREE
-   The trunk is a double helix. On hover the branches draw themselves in and
-   the ember rays rise behind it.
---------------------------------------------------------------------------- */
+   =========================================================================== */
+.tree-line {
+  stroke: rgb(var(--muted));
+}
+.tree-cool {
+  stroke: rgb(var(--cool));
+}
+.tree-branch {
+  stroke: rgb(var(--accent));
+}
+.tree-spark {
+  fill: rgb(var(--blood));
+}
+.tree-ray-from {
+  stop-color: rgb(var(--accent));
+  stop-opacity: 0;
+}
+.tree-ray-mid {
+  stop-color: rgb(var(--accent));
+  stop-opacity: 0.75;
+}
+.tree-ray-to {
+  stop-color: rgb(var(--accent-hi));
+  stop-opacity: 0;
+}
+.tree-crown-from {
+  stop-color: rgb(var(--accent));
+  stop-opacity: 0.42;
+}
+.tree-crown-to {
+  stop-color: rgb(var(--accent));
+  stop-opacity: 0;
+}
+.tree-root-from {
+  stop-color: rgb(var(--blood));
+  stop-opacity: 0.55;
+}
+.tree-root-to {
+  stop-color: rgb(var(--blood));
+  stop-opacity: 0;
+}
+
 .ember-tree .branch {
   stroke-dasharray: 260;
   stroke-dashoffset: 260;
@@ -423,16 +586,29 @@
   transform: translateY(-4px);
 }
 
+.ember-tree:hover .helix-strand {
+  stroke: rgb(var(--accent-lo));
+}
 .ember-tree .helix-strand {
   transition: stroke 0.7s ease;
 }
-.ember-tree:hover .helix-strand {
-  stroke: theme('colors.ember.600');
+
+/* Touch devices have no hover, so the tree opens on tap via :focus-within and
+   is shown in its resting state otherwise. */
+@media (hover: none) {
+  .ember-tree .branch {
+    opacity: 0.55;
+    stroke-dashoffset: 0;
+  }
+  .ember-tree .ray {
+    opacity: 0.4;
+    transform: scaleY(0.7);
+  }
 }
 
-/* ---------------------------------------------------------------------------
-   REDUCED MOTION — everything above degrades to "just show it".
---------------------------------------------------------------------------- */
+/* ===========================================================================
+   REDUCED MOTION
+   =========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

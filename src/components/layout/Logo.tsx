@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 /**
  * The reference site swaps a logo sprite on hover. Ours does the same swap in
@@ -6,19 +6,25 @@ import Link from 'next/link';
  * and the helix glyph beside it turns a half rotation.
  */
 export default function Logo({ compact = false }: { compact?: boolean }) {
-  const size = compact ? 'text-[1rem]' : 'text-[1.15rem] md:text-[1.3rem]';
+  const size = compact ? "text-[1rem]" : "text-[1.15rem] md:text-[1.3rem]";
 
   return (
-    <Link href="/" className="logo-stack group shrink-0" aria-label="Victer Hugo Basurco — home">
+    <Link
+      href="/"
+      className="logo-stack group shrink-0"
+      aria-label="Victer Hugo Basurco — home"
+    >
       <span className="flex items-center gap-3">
         <HelixGlyph />
         <span className="relative block">
           {/* base layer */}
           <span className="logo-layer logo-base block">
-            <span className="block font-condensed text-[0.6rem] uppercase tracking-[0.42em] text-ash">
+            <span className="block font-condensed text-[0.6rem] uppercase tracking-[0.42em] text-muted">
               Victer Hugo
             </span>
-            <span className={`block font-display font-semibold leading-none tracking-[0.06em] text-bone ${size}`}>
+            <span
+              className={`block font-display font-semibold leading-none tracking-[0.06em] text-primary ${size}`}
+            >
               BASURCO
             </span>
           </span>
@@ -27,7 +33,9 @@ export default function Logo({ compact = false }: { compact?: boolean }) {
             <span className="block font-condensed text-[0.6rem] uppercase tracking-[0.42em] text-ember/70">
               Victer Hugo
             </span>
-            <span className={`block font-display font-semibold leading-none tracking-[0.06em] ${size}`}>
+            <span
+              className={`block font-display font-semibold leading-none tracking-[0.06em] ${size}`}
+            >
               BASURCO
             </span>
           </span>
@@ -41,10 +49,16 @@ function HelixGlyph() {
   return (
     <span
       className="logo-helix block transition-transform duration-700"
-      style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }}
+      style={{ transitionTimingFunction: "cubic-bezier(.16,1,.3,1)" }}
       aria-hidden
     >
-      <svg width="18" height="30" viewBox="0 0 18 30" fill="none" className="overflow-visible">
+      <svg
+        width="18"
+        height="30"
+        viewBox="0 0 18 30"
+        fill="none"
+        className="overflow-visible"
+      >
         <path
           d="M3 1c0 6 12 8 12 14S3 23 3 29"
           stroke="currentColor"
@@ -68,7 +82,7 @@ function HelixGlyph() {
             y2={y}
             stroke="currentColor"
             strokeWidth="1"
-            className="text-bone/35"
+            className="text-primary/35"
           />
         ))}
       </svg>

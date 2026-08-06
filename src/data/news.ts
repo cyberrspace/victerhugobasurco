@@ -43,8 +43,7 @@ export const news: NewsItem[] = [
     date: '2026-03-14',
     kind: 'announcement',
     excerpt:
-      'A new Alzheimer\u2019s drug restores what the disease took. It also brings back everything the patient buried. Victer expects to finish the draft in the autumn of 2026.',
-    quote: 'Nobody asked what else was in there.',
+      'A promising new drug for Alzheimer\u2019s patients gives hope to many \u2014 but the drug has a good side and a frightening side effect. Victer expects to finish the draft in the autumn of 2026.',
     href: '/works/mindburst',
   },
   {

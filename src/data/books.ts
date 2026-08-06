@@ -88,25 +88,24 @@ export const books: Book[] = [
   {
     slug: 'mindburst',
     title: 'Mindburst',
-    tagline: 'The drug gives them their memory back. It gives them everything back.',
-    genre: 'Medical Thriller',
+    tagline: 'The drug has a good side and a frightening side effect.',
+    genre: 'Thriller',
     status: 'writing',
     releaseLabel: 'Writing — autumn 2026',
     releaseDate: '2026-10-01',
+    // Synopsis is the author's own wording. Spacing and sentence punctuation
+    // adjusted only — do not rewrite without asking him.
     blurb: [
-      'Zimabyne is the first Alzheimer\u2019s drug in a generation to show real promise, and for the families watching a parent disappear by degrees, promise is everything. They know how the story usually ends: the care centre, the visits that thin out over the years, the afternoon the patient stops recognising anyone at all. Death follows soon after.',
-      'In trials, Zimabyne works. It also does something nobody designed it to do.',
-      'After several doses, something in the room \u2014 an object, a voice, a smell \u2014 catches, and the patient blurts out a single word. Doctors and visiting relatives are left staring at each other, frightened by an outburst none of them can explain. The word means nothing until the visits accumulate and the recollections start to line up. Then the patient tells them what it means, and what has been sitting underneath it for thirty years.',
-      'Mindburst is a collection of those cases: secrets that have slept for decades, surfacing in a hospital room with the power to mend a family, recover what was lost, or reopen a murder.',
+      'A promising new drug, Zimabyne, for Alzheimer\u2019s patient give hope for many suffering from the disease. But with many good intentions, the drug has a good side and a frightening side effect. The drug gives hope to families with elder parents, who have lost their spirit with memory lost. Families often sending them to care centers with other similar impairment. After years of other treatment, families tend to slowly walk away from the loved one and reduce their visits, till the ailing patient no longer recognize anyone or their daily routine. Dying shortly after.',
+      'The new drug Zimabyne, starts to show positive signs on test patients with one terrifying side effect. Each patient after several trial dosage, the patient reaction is triggered by something in the room and blurting out a word, that either the doctors or visiting family are frightened by the screaming outburst. In most cases no one knows what the patient means. Till after a series of visit and recollections. The patient reveals the deep hidden secret. They\u2019ve been hiding for years.',
+      'Mindburst is a collection of stories where patients\u2019 deepest secrets, have been asleep for decades and now can be able to resolve relationships, lost items and murder.',
     ],
     facts: [
-      { label: 'Genre', value: 'Medical thriller' },
-      { label: 'Form', value: 'Linked cases' },
+      { label: 'Genre', value: 'Thriller' },
+      { label: 'Form', value: 'A collection of stories' },
       { label: 'Status', value: 'Draft in progress' },
       { label: 'Expected', value: 'Autumn 2026' },
     ],
-    authorNote:
-      'The drug was supposed to give them their memory back. Nobody asked what else was in there.',
   },
 ];
 

@@ -88,19 +88,25 @@ export const books: Book[] = [
   {
     slug: 'mindburst',
     title: 'Mindburst',
-    tagline: 'In progress. Expected autumn 2026.',
-    genre: 'Thriller',
+    tagline: 'The drug gives them their memory back. It gives them everything back.',
+    genre: 'Medical Thriller',
     status: 'writing',
     releaseLabel: 'Writing — autumn 2026',
     releaseDate: '2026-10-01',
     blurb: [
-      'The third book is underway. Victer began Mindburst after finishing The Suicide Council and expects to complete the draft in the autumn of 2026.',
-      'Details will be announced here first.',
+      'Zimabyne is the first Alzheimer\u2019s drug in a generation to show real promise, and for the families watching a parent disappear by degrees, promise is everything. They know how the story usually ends: the care centre, the visits that thin out over the years, the afternoon the patient stops recognising anyone at all. Death follows soon after.',
+      'In trials, Zimabyne works. It also does something nobody designed it to do.',
+      'After several doses, something in the room \u2014 an object, a voice, a smell \u2014 catches, and the patient blurts out a single word. Doctors and visiting relatives are left staring at each other, frightened by an outburst none of them can explain. The word means nothing until the visits accumulate and the recollections start to line up. Then the patient tells them what it means, and what has been sitting underneath it for thirty years.',
+      'Mindburst is a collection of those cases: secrets that have slept for decades, surfacing in a hospital room with the power to mend a family, recover what was lost, or reopen a murder.',
     ],
     facts: [
+      { label: 'Genre', value: 'Medical thriller' },
+      { label: 'Form', value: 'Linked cases' },
       { label: 'Status', value: 'Draft in progress' },
       { label: 'Expected', value: 'Autumn 2026' },
     ],
+    authorNote:
+      'The drug was supposed to give them their memory back. Nobody asked what else was in there.',
   },
 ];
 

@@ -39,12 +39,13 @@ export const news: NewsItem[] = [
   },
   {
     id: 'mindburst-underway',
-    title: 'Mindburst underway',
+    title: 'Mindburst — first look at the third novel',
     date: '2026-03-14',
     kind: 'announcement',
     excerpt:
-      'Work has started on a third novel. Victer expects to finish the draft in the autumn of 2026. Announcements land here first.',
-    href: '/upcoming',
+      'A new Alzheimer\u2019s drug restores what the disease took. It also brings back everything the patient buried. Victer expects to finish the draft in the autumn of 2026.',
+    quote: 'Nobody asked what else was in there.',
+    href: '/works/mindburst',
   },
   {
     id: 'killing-gene-out',

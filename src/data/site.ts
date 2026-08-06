@@ -15,8 +15,8 @@ export interface SocialLink {
 export const site = {
   name: 'Victer Hugo Basurco',
   shortName: 'V. H. Basurco',
-  domain: 'www.victerhugobasurco.com',
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.victerhugobasurco.com',
+  domain: 'victerhugobasurcobooks.com',
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://victerhugobasurcobooks.com',
   role: 'Novelist',
   tagline: 'Thrillers written from the inside of the machine.',
   /** Used for meta descriptions and the author strip. */
